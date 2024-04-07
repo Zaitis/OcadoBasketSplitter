@@ -1,3 +1,5 @@
+package pl.painm;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,10 +9,8 @@ import java.util.Map;
 
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import pl.painm.BasketSplitter;
 
 class BasketSplitterTest {
   BasketSplitter basketSplitter = new BasketSplitter("src\\main\\resources\\config.json");
