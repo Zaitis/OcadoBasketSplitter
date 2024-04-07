@@ -10,7 +10,6 @@ import java.util.Map;
 import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import pl.painm.BasketSplitter;
 
 class BasketSplitterTest {
   BasketSplitter basketSplitter = new BasketSplitter("src\\main\\resources\\config.json");

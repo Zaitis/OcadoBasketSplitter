@@ -1,6 +1,6 @@
 package pl.painm;
 
-import java.io.FileNotFoundException;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,22 +26,19 @@ public class BasketSplitter {
 
     private Map<String, List<String>> loadConfig(String absolutePathToConfigFile) throws IOException, ParseException {
         Map<String, List<String>> configMap = new HashMap<>();
-
         JSONParser parser = new JSONParser();
         JSONObject configJson = (JSONObject) parser.parse(new FileReader(absolutePathToConfigFile));
 
         for (Object key : configJson.keySet()) {
             String productName = (String) key;
             JSONArray deliveriesArray = (JSONArray) configJson.get(productName);
-
             List<String> deliveries = new ArrayList<>();
+
             for (Object deliveryObj : deliveriesArray) {
                 deliveries.add((String) deliveryObj);
             }
-
             configMap.put(productName, deliveries);
         }
-
         return configMap;
     }
 
@@ -50,7 +47,6 @@ public class BasketSplitter {
         for (Map.Entry<String, List<String>> entry : productDeliveryMap.entrySet()) {
             String key = entry.getKey();
             System.out.println(key);
-
         }
     }
 
@@ -61,24 +57,21 @@ public class BasketSplitter {
             List<String> values = entry.getValue();
             deliverMethods.addAll(values);
         }
-        for (String value: deliverMethods
-             ) {
+        for (String value: deliverMethods) {
             System.out.println(value);
         }
     }
 
     public Map<String, List<String>> split(List<String> items) {
-        Map<String, List<String>> deliveryGroups = new HashMap<>();
+        Map<String, List<String>> deliveryMethods = new HashMap<>();
 
         for (String item : items) {
             boolean added = false;
-
             List<String> availableDeliveries = productDeliveryMap.getOrDefault(item, new ArrayList<>());
 
             for (String delivery : availableDeliveries) {
-
-                if (deliveryGroups.containsKey(delivery)) {
-                    deliveryGroups.get(delivery).add(item);
+                if (deliveryMethods.containsKey(delivery)) {
+                    deliveryMethods.get(delivery).add(item);
                     added = true;
                     break;
                 }
@@ -87,10 +80,9 @@ public class BasketSplitter {
                 String delivery = availableDeliveries.get(0);
                 List<String> newGroup = new ArrayList<>();
                 newGroup.add(item);
-                deliveryGroups.put(delivery, newGroup);
+                deliveryMethods.put(delivery, newGroup);
             }
         }
-
-        return deliveryGroups;
+        return deliveryMethods;
     }
 }
