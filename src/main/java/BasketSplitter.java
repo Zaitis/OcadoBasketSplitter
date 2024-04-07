@@ -64,4 +64,31 @@ public class BasketSplitter {
             System.out.println(value);
         }
     }
+
+    public Map<String, List<String>> split(List<String> items) {
+        Map<String, List<String>> deliveryGroups = new HashMap<>();
+
+        for (String item : items) {
+            boolean added = false;
+
+            List<String> availableDeliveries = productDeliveryMap.getOrDefault(item, new ArrayList<>());
+
+            for (String delivery : availableDeliveries) {
+
+                if (deliveryGroups.containsKey(delivery)) {
+                    deliveryGroups.get(delivery).add(item);
+                    added = true;
+                    break;
+                }
+            }
+            if (!added && !availableDeliveries.isEmpty()) {
+                String delivery = availableDeliveries.get(0);
+                List<String> newGroup = new ArrayList<>();
+                newGroup.add(item);
+                deliveryGroups.put(delivery, newGroup);
+            }
+        }
+
+        return deliveryGroups;
+    }
 }
